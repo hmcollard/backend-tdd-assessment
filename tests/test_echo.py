@@ -82,6 +82,15 @@ class TestEcho(unittest.TestCase):
         # that will be visible to your other test methods
         pass
 
+    # def test_help(self):
+    #     """ Check that usage is printed when -h option is given"""
+    #     args = ["-h"]
+    #     stdout, stderr = run_capture(self.module.__file__, args)
+    #     self.assertEqual(
+    #         stdout[0], args[0],
+    #         "The program does not print help"
+    #     )
+
     def test_parser(self):
         """Check if create_parser() returns a parser object"""
         result = self.module.create_parser()
@@ -136,6 +145,24 @@ class TestEcho(unittest.TestCase):
         self.assertEqual(
             stdout[0], "Hello World",
             "The program is not performing titlecasing an echo"
+        )
+
+    def test_all_short(self):
+        """Check if all short options '-tul' performs titlecasing"""
+        args = ["-tul", "hello world"]
+        stdout, stderr = run_capture(self.module.__file__, args)
+        self.assertEqual(
+            stdout[0], "Hello World",
+            "The program is not performing titlecasing an echo"
+        )
+
+    def test_no_flags(self):
+        """Check if no options prints unaltered text"""
+        args = ["hElLo woRlD"]
+        stdout, stderr = run_capture(self.module.__file__, args)
+        self.assertEqual(
+            stdout[0], "hElLo woRlD",
+            "The program is not performing an echo"
         )
 
 
